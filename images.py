@@ -1,24 +1,23 @@
 import tkinter
 from color import Color
+from pathlib import Path
 
 class Images:
-    PATH_BASE = "C:\\Users\\0221PG\\Desktop\\Meine Proiekt\\python\\tetris\\asset\\cute\\"
-
     def __init__(self):
-        self.paths = ["bedrock.png",     # 0
-                      "brown.png",       # 1
-                      "cyan.png",        # 2
-                      "green.png",      # 3
-                      "orange.png",     # 4
-                      "pink.png",       # 5
-                      "purple.png",     # 6
-                      "rainbow.png",    # 7
-                      "red.png",        # 8
-                      "white.png",      # 9
-                      "yellow.png"]     # 10
+        self.paths = ["\\asset\\cute\\bedrock.png",     # 0
+                      "\\asset\\cute\\brown.png",       # 1
+                      "\\asset\\cute\\cyan.png",        # 2
+                      "\\asset\\cute\\green.png",      # 3
+                      "\\asset\\cute\\orange.png",     # 4
+                      "\\asset\\cute\\pink.png",       # 5
+                      "\\asset\\cute\\purple.png",     # 6
+                      "\\asset\\cute\\rainbow.png",    # 7
+                      "\\asset\\cute\\red.png",        # 8
+                      "\\asset\\cute\\white.png",      # 9
+                      "\\asset\\cute\\yellow.png"]     # 10
         self.images = []
         for i in range(len(self.paths)):
-            self.images.append(tkinter.PhotoImage(file=(Images.PATH_BASE+self.paths[i])))
+            self.images.append(tkinter.PhotoImage(file=(Images.make_absolute_path(self.paths[i]))))
             self.images[i] = self.images[i].subsample(1, 1)  # divide by 4
             self.images[i] = self.images[i].zoom(1, 1)  # zoom x 2
 
@@ -41,3 +40,10 @@ class Images:
             return self.images[7]
         else:
             return self.images[0]
+
+    @classmethod
+    def make_absolute_path(self, relative_path):
+        """
+        相対パスを絶対パスへ変換
+        """
+        return (str(Path(__file__).parent) + relative_path).replace("\\", "/")
